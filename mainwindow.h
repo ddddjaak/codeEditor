@@ -18,8 +18,16 @@ private slots:
     void New();
     void open();
     void save();
+    void saveAs();
+    void print();
+    void cut();
+    void paste();
+    void undo();
+    void redo();
+    void selectFont();
+    void about();
     void copy();
-    void yes();
+    void exit();
 private:
     Ui::MainWindow *ui;
     QString currentfile;

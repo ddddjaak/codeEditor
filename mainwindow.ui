@@ -24,55 +24,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>110</y>
-      <width>80</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Yes</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>110</y>
-      <width>80</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>NO</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>160</y>
-      <width>371</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>21</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -88,26 +39,39 @@
    <addaction name="actionnew"/>
    <addaction name="actionopen"/>
    <addaction name="actionsave"/>
+   <addaction name="actionsaveAs"/>
    <addaction name="actioncopy"/>
    <addaction name="actioncut"/>
    <addaction name="actionpaste"/>
+   <addaction name="actionprint"/>
+   <addaction name="actionselectFont"/>
    <addaction name="actionundo"/>
    <addaction name="actionredo"/>
    <addaction name="actionexit"/>
+   <addaction name="actionabout"/>
   </widget>
   <action name="actioncopy">
    <property name="text">
     <string>copy</string>
+   </property>
+   <property name="toolTip">
+    <string>复制</string>
    </property>
   </action>
   <action name="actioncut">
    <property name="text">
     <string>cut</string>
    </property>
+   <property name="toolTip">
+    <string>剪贴</string>
+   </property>
   </action>
   <action name="actionpaste">
    <property name="text">
     <string>paste</string>
+   </property>
+   <property name="toolTip">
+    <string>粘贴</string>
    </property>
   </action>
   <action name="actionundo">
@@ -124,6 +88,9 @@
    <property name="text">
     <string>open</string>
    </property>
+   <property name="toolTip">
+    <string>打开文件</string>
+   </property>
   </action>
   <action name="actionsave">
    <property name="text">
@@ -138,6 +105,29 @@
   <action name="actionnew">
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="toolTip">
+    <string>新建文件</string>
+   </property>
+  </action>
+  <action name="actionabout">
+   <property name="text">
+    <string>about</string>
+   </property>
+  </action>
+  <action name="actionselectFont">
+   <property name="text">
+    <string>selectFont</string>
+   </property>
+  </action>
+  <action name="actionsaveAs">
+   <property name="text">
+    <string>saveAs</string>
+   </property>
+  </action>
+  <action name="actionprint">
+   <property name="text">
+    <string>print</string>
    </property>
   </action>
  </widget>

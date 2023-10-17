@@ -5,28 +5,28 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QTextStream>
-#include <QLabel>
+#include <QFontDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //QPushButton *button1 = new QPushButton("&Download", this);
+    this->setCentralWidget(ui->textEdit);
 
-    //this->setCentralWidget(ui->textEdit);
-//    QPixmap pixmap;//定义QPixmap对象
-//    pixmap.load(":/images/girl");//加载图片
-//    QLabel *my_label= new QLabel(this);
-//   // my_label->resize(64,64);
-//    my_label->move(200,200);
-//    my_label->setPixmap(pixmap);   //图片设置到QLabel中
-   // ui->label1->setPixmap(QPixmap("/images/girl"));
     connect(ui->actionnew,&QAction::triggered,this,&MainWindow::New);
     connect(ui->actionopen,&QAction::triggered,this,&MainWindow::open);
     connect(ui->actionsave,&QAction::triggered,this,&MainWindow::save);
     connect(ui->actioncopy,&QAction::triggered,this,&MainWindow::copy);
-    connect(ui->pushButton,&QPushButton::clicked,this,&MainWindow::yes);
+    connect(ui->actionsaveAs,&QAction::triggered,this,&MainWindow::saveAs);
+    connect(ui->actionabout,&QAction::triggered,this,&MainWindow::about);
+    connect(ui->actioncut,&QAction::triggered,this,&MainWindow::cut);
+    connect(ui->actionexit,&QAction::triggered,this,&MainWindow::exit);
+    connect(ui->actionredo,&QAction::triggered,this,&MainWindow::redo);
+    connect(ui->actionundo,&QAction::triggered,this,&MainWindow::undo);
+    connect(ui->actionprint,&QAction::triggered,this,&MainWindow::print);
+    connect(ui->actionselectFont,&QAction::triggered,this,&MainWindow::selectFont);
+    connect(ui->actionpaste,&QAction::triggered,this,&MainWindow::paste);
 
 }
 
@@ -82,16 +82,80 @@ void MainWindow::save()
 
 void MainWindow::copy()
 {
+#if QT_CONFIG(clipboard)
+    ui->textEdit->copy();
+#endif
+}
+
+
+void MainWindow::exit()
+{
+    QCoreApplication::quit();
+}
+
+void MainWindow::paste()
+{
+#if QT_CONFIG(clipboard)
+    ui->textEdit->paste();
+#endif
+}
+
+void MainWindow::selectFont()
+{
+    bool fontSelected;
+    QFont font = QFontDialog::getFont(&fontSelected, this);
+    if (fontSelected)
+        ui->textEdit->setFont(font);
+}
+
+void MainWindow::print()
+{
+#if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
+    QPrinter printDev;
+#if QT_CONFIG(printdialog)
+    QPrintDialog dialog(&printDev,this);
+    if (dialog.exec() == QDialog::Rejected)
+        return;
+#endif
+    ui->textEdit->print(&printDev);
+#endif
+}
+
+void MainWindow::undo()
+{
+    ui->textEdit->undo();
+}
+
+void MainWindow::redo()
+{
+    ui->textEdit->redo();
+}
+
+void MainWindow::cut()
+{
+#if QT_CONFIG(clipboard)
+    ui->textEdit->cut();
+#endif
+}
+
+void MainWindow::about()
+{
 
 }
 
-void MainWindow::yes()
+void MainWindow::saveAs()
 {
-    QPixmap pixmap;//定义QPixmap对象
-    pixmap.load(":/images/life.png");//加载图片
-    //QLabel *my_label= new QLabel(this);
-    // my_label->resize(64,64);
-    //my_label->move(200,200);
-    //my_label->setPixmap(pixmap);   //图片设置到QLabel中
-    ui->label->setPixmap(pixmap);
+    QString fileName = QFileDialog::getSaveFileName(this,"Save as");
+    QFile file(fileName);
+
+    if(!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this,"Warning","Cannot save file: " + file.errorString());
+        return;
+    }
+    currentfile = fileName;
+    setWindowTitle(fileName);
+    QTextStream out(&file);
+    QString text = ui->textEdit->toPlainText();
+    out << text;
+    file.close();
 }
