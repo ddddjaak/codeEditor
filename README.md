@@ -1,1 +1,1 @@
-# This is a text editor
+# This is a code editor
